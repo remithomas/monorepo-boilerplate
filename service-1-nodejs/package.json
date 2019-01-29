@@ -1,0 +1,15 @@
+{
+  "name": "service-1-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo run test from service-1-nodejs"
+  },
+  "author": "Remi Thomas",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
