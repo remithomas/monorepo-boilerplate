@@ -31,13 +31,13 @@ jobs:
 
   # TODO: build only folder who has been modified
   build:
-    docker:
+      docker:
         - image: circleci/node:7.10
       steps:
           - run: echo "Build !"
 
   deploy-prod:
-    docker:
+      docker:
         - image: circleci/node:7.10
       steps:
           - run: echo "Deploy prod !"
