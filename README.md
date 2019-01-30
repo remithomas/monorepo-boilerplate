@@ -18,5 +18,5 @@ Because I need to know
 - [ ] Maven service
 - [ ] Nodejs service
 - [ ] Docker-compose
-- [ ] External commands (to clean .circleci/config.yml)
+- [ ] External commands (to clean .circleci/config.yml) shell scripts
 - [ ] Create task to validate circleci config (using task `circleci config validate`)
