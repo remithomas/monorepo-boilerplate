@@ -17,31 +17,51 @@ aliases:
       - run: npm test
 
 jobs:
-  service-1-nodejs:
+  service-1-nodejs-build:
     docker:
       - image: circleci/node:7.10
     working_directory: ~/monorepo-boilerplate/service-1-nodejs
     steps: *nodejs_build_and_test
   
-  service-3-nodejs:
+  service-3-nodejs-build:
     docker:
       - image: circleci/node:7.10
     working_directory: ~/monorepo-boilerplate/service-3-nodejs
     steps: *nodejs_build_and_test
 
-  deploy:
-      docker:
+  # TODO: build only folder who has been modified
+  build:
+    docker:
         - image: circleci/node:7.10
       steps:
-          - run: echo "Deploy !"
+          - run: echo "Build !"
+
+  deploy-prod:
+    docker:
+        - image: circleci/node:7.10
+      steps:
+          - run: echo "Deploy prod !"
+
+
 
 workflows:
   version: 2
   build:
     jobs:
-      - service-1-nodejs
-      - service-3-nodejs
-      - deploy:
+      - build:
+          filters:
+            branches:
+              # only from forks
+              only: /^pull\/.*$/
+
+      - predeploy-prod:
           requires:
-            - service-1-nodejs
-            - service-3-nodejs
+            - service-1-nodejs-build
+            - service-3-nodejs-build
+
+      - deploy-prod:
+          requires:
+            - predeploy-prod
+          filters:
+            branches:
+                only: master
