@@ -11,6 +11,7 @@ Because I need to know
 ## References
 
 - https://github.com/Tufin/circleci-monorepo
+- https://blog.ghaiklor.com/how-do-we-build-our-platform-from-mono-repository-on-circleci-d98fc2bf8170
 
 ## Todos
 
