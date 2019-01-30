@@ -20,20 +20,14 @@ jobs:
   service-1-nodejs:
     docker:
       - image: circleci/node:7.10
-
     working_directory: ~/monorepo-boilerplate/service-1-nodejs
-
-    steps:
-      <<: *nodejs_build_and_test
+    steps: *nodejs_build_and_test
   
   service-3-nodejs:
     docker:
       - image: circleci/node:7.10
-
     working_directory: ~/monorepo-boilerplate/service-3-nodejs
-
-    steps:
-      <<: *nodejs_build_and_test
+    steps: *nodejs_build_and_test
 
   deploy:
       docker:
