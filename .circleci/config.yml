@@ -36,6 +36,12 @@ jobs:
       steps:
           - run: echo "Build !"
 
+  predeploy-prod:
+      docker:
+        - image: circleci/node:7.10
+      steps:
+          - run: echo "predeploy prod !"
+
   deploy-prod:
       docker:
         - image: circleci/node:7.10
