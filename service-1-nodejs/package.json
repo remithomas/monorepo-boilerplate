@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo run test from service-1-nodejs"
+    "test": "echo \"run test from service-1-nodejs\" && true"
   },
   "author": "Remi Thomas",
   "license": "ISC",
