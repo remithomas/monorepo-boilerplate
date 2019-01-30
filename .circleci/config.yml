@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: circleci/node:7.10
 
-    working_directory: ~/monorepo-boilerplate
+    working_directory: ~/monorepo-boilerplate/service-1-nodejs
 
     steps:
       - checkout
