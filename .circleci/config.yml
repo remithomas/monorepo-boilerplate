@@ -21,6 +21,27 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
+  
+  service-3-nodejs:
+    docker:
+      - image: circleci/node:7.10
+
+    working_directory: ~/monorepo-boilerplate/service-3-nodejs
+
+    steps:
+      - checkout:
+          path: ~/monorepo-boilerplate
+      - restore_cache:
+          keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              # fallback to using the latest cache if no exact match is found
+              - v1-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: npm test
 
   deploy:
       docker:
@@ -33,3 +54,8 @@ workflows:
   build:
     jobs:
       - service-1-nodejs
+      - service-3-nodejs
+      - deploy:
+          requires:
+            - service-1-nodejs
+            - service-3-nodejs
