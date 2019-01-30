@@ -2,6 +2,7 @@ version: 2
 
 aliases:
   - &nodejs_build_and_test
+      # should be skip if not part of this commit (or not building master)
       - checkout:
           path: ~/monorepo-boilerplate
       - restore_cache:
@@ -54,6 +55,9 @@ workflows:
   version: 2
   build:
     jobs:
+      - service-1-nodejs-build
+      - service-3-nodejs-build
+
       - build:
           filters:
             branches:
