@@ -23,6 +23,8 @@ jobs:
       - run: npm test
 
   deploy:
+      docker:
+        - image: circleci/node:7.10
       steps:
           - run: echo "Deploy !"
 
