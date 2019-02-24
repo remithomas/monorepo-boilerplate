@@ -37,6 +37,7 @@ jobs:
       steps:
           - run: echo "Build !"
 
+  # TODO: deploy only folder who has been modified
   deploy-prod:
       docker:
         - image: circleci/node:7.10
