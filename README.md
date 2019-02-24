@@ -1,10 +1,10 @@
-# Monorepo Boilerplate
+# WIP - Monorepo Boilerplate
 
 > A simple boilerplate of `monorepo` CI/CD using `CircleCi`
 
 ## Motivations
 
-Because I need to know
+Sometimes you need a monorepo with multiple technologies (nodejs, java, golang, elixir). I need a boilerplate to start up it.
 
 ## How-to
 
@@ -16,6 +16,7 @@ Because I need to know
 ## Todos
 
 - [ ] Maven service
+- [ ] Maven release (multiple maven projects)
 - [ ] Nodejs service
 - [ ] Docker-compose
 - [ ] External commands (to clean .circleci/config.yml) shell scripts

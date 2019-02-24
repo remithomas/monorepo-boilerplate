@@ -18,6 +18,7 @@ aliases:
       - run: npm test
 
 jobs:
+
   service-1-nodejs-build:
     docker:
       - image: circleci/node:7.10
@@ -44,6 +45,23 @@ jobs:
       steps:
           - run: echo "Deploy prod !"
 
+  custom_builder:
+      docker:
+        - image: circleci/node:7.10
+      steps:
+          - run: echo "custom_builder!"
+
+  builder:
+      name: conditionally run a deploy job
+      command: |
+        # replace this with your build/deploy check (i.e. current branch is "release")
+        if [[ true ]]; then
+          curl --user ${CIRCLE_API_USER_TOKEN} \
+            --data build_parameters[CIRCLE_JOB]=custom_builder \
+            --data revision=$CIRCLE_SHA1 \
+            https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH
+        fi
+
 
 
 workflows:
@@ -52,6 +70,7 @@ workflows:
     jobs:
       - service-1-nodejs-build
       - service-3-nodejs-build
+      - builder
 
       - build:
           filters:
