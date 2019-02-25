@@ -27,9 +27,11 @@ jobs:
           - run:
               name: Export shouldBuild
               command: |
-                echo 'export BUILD_NODE1="BUILD"' >> $BASH_ENV
-                echo 'export BUILD_NODE2=""' >> $BASH_ENV
-                source $BASH_ENV
+                echo 'export SHOULD_BUILD_NODE1="BUILD"' >> $BASH_ENV
+                echo 'export SHOULD_BUILD_NODE3=""' >> $BASH_ENV
+                # source $BASH_ENV
+          - run: echo ${SHOULD_BUILD_NODE1}
+          - run: echo ${SHOULD_BUILD_NODE3}
 
   service-1-nodejs-build:
       docker:
@@ -61,16 +63,25 @@ jobs:
       docker:
         - image: circleci/node:7.10
       parameters:
-        custom_checkout:
+        should_build:
           type: string
           default: ""
       steps:
+          - run:
+              name: Export shouldBuild
+              command: |
+                echo 'export SHOULD_BUILD_NODE1="BUILD_IT"' >> $BASH_ENV
+                echo 'export SHOULD_BUILD_NODE3=""' >> $BASH_ENV
+          - run: echo ${SHOULD_BUILD_NODE1}
+          - run: echo ${SHOULD_BUILD_NODE3}
+          # - run: echo "should build ? ${parameters.should_build}"
           - when:
-              condition: <<parameters.custom_checkout>>
+              condition: "$SHOULD_BUILD_NODE3"
               steps:
                 - run: echo "yes it works!"
           - unless:
-              condition: <<parameters.custom_checkout>>
+              # condition: <<parameters.should_build>>
+              condition: "$SHOULD_BUILD_NODE3"
               steps:
                 - run: echo "nope but why not!"
 
@@ -102,18 +113,22 @@ workflows:
   version: 2
   build:
     jobs:
-      - prepare_builds
+      - prepare_builds:
+          context: org-global  
 
       - service-1-nodejs-build:
+          context: org-global  
           requires:
               - prepare_builds
       - service-3-nodejs-build:
+          context: org-global  
           requires:
               - prepare_builds
       - conditional:
+          context: org-global  
           requires:
               - prepare_builds
-          # custom_checkout: "any non-empty string is truthy"
+          should_build: "$SHOULD_BUILD_NODE3"
 
       - next:
           type: approval
